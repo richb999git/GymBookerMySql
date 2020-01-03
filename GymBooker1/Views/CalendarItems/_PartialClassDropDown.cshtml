@@ -1,0 +1,23 @@
+﻿
+<br />
+<div class="dropdown pull-left">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Choose class type
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li onClick="buttonClick()">@Html.ActionLink("ALL", (string)ViewBag.controller, new { fitnessClass = "ALL" }, new { @class = "drop-black" })</li>
+        @foreach (var item in ViewBag.GymClasses)
+        {
+            <li onClick="buttonClick()">@Html.ActionLink((string)item.Name, (string)ViewBag.controller, new { fitnessClass = item.Name }, new { @class = "drop-black" })</li>
+        }
+    </ul>
+</div>
+
+<p class="timetableDropdownChoice">
+    @ViewBag.fitnessClass
+</p>
+
+<div class="clearfixes"></div>
+
+<br /><br />

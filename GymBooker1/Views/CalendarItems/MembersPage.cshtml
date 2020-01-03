@@ -1,0 +1,98 @@
+﻿@* Member page showing classes booked  *@
+@* Controller: CalendarItemsController  *@
+
+@model IEnumerable<GymBooker1.Models.CalendarItem>
+
+@*<h1 id="spinner1" class="show spinner-centre">
+        <i class="fa fa-refresh fa-spin"></i> @*Need the font awesome css - v small though. See _Layout.cshtml
+    </h1>*@
+
+<div id="snackbar">Some text some message..</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cancel Class?</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel?
+            </div>
+            <div class="modal-footer">
+                <button id="yes" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+                <button id="no" type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+<h2>Members Page</h2>
+<br />
+<h2>Your booked classes:</h2>
+
+<div class="tableOverflow containerT">
+    <table class="table table-bordered table-condensed table-striped table-hover">
+        <thead>
+            <tr class="">
+                <th>
+                    Class name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Instructor)
+                </th>
+                <th>
+                    Studio
+                </th>
+                <th class="min-width95">
+                    @Html.DisplayNameFor(model => model.GymClassTime.Date)
+                </th>
+                <th class="min-width75">
+                    Time
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="bg-white" id="@item.Id">
+                    <td class="sticky">
+                        @Html.ActionLink(item.GymClass.Name, "ClassDescription", new { id = item.Id }, new { onClick = "buttonClick()" })                        
+                    </td>                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration) mins
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Instructor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hall)
+                    </td>
+                    <td>
+                        @{
+                            var date = item.GymClassTime.ToString("ddd d MMM");
+                            @Html.DisplayFor(modelItem => date)
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var time = item.GymClassTime.ToString("hh:mm tt").ToLower();
+                            @Html.DisplayFor(modelItem => time)
+                        }
+                    </td>
+                    <td class="width140">
+                        <button class="btn btn-sm btn-danger mb-1 rounded" type="button" onclick="MemberCancelClassAJAX(@item.Id.ToString());">Cancel</button>
+                        @Html.ActionLink("Details", "ClassDescription", new { id = item.Id }, new { @class = "btn btn-sm btn-primary mb-1 rounded", onClick = "buttonClick()" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

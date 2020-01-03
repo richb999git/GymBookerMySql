@@ -1,0 +1,98 @@
+﻿@* Show description of a particular class  *@
+@* Controller: CalendarItemsController  *@
+
+@model GymBooker1.Models.CalendarItem
+
+
+<div>
+
+    <div class="text-center width75Centreg">
+
+        <h3>@Model.GymClass.Name</h3>
+
+        <div class="hidden-xs">
+            <h4>@Model.GymClass.Description</h4>
+            <div class="description-box">
+                <div class="text-left text-primary">
+                    <h4>Instructor: @Model.Instructor</h4>
+                    <h4>Studio: @Model.Hall</h4>
+                    <h4>Date: @Model.GymClassTime</h4>
+                    <h4>Maximum of @Model.MaxPeople people in this class</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="visible-xs">
+            <h4 class="text-justify">@Model.GymClass.Description</h4>
+            <div class="text-primary">
+                <div class="text-left">
+                    <h4>Instructor: @Model.Instructor</h4>
+                    <h4>Studio: @Model.Hall</h4>
+                    <h4>Date: @Model.GymClassTime</h4>
+                    <h4>Maximum of @Model.MaxPeople people in this class</h4>
+                </div>
+            </div>
+        </div>
+
+        <h3>Enjoy!</h3>
+
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            // show Booked! if booked and a Cancel button
+            var strCurrentUserId = ViewBag.UserId;
+            int index = Model.UserIds.IndexOf(strCurrentUserId);
+            if (index != -1)
+            {
+                <h4>You're aleady booked in!</h4>
+                <br />               
+                using (Html.BeginForm("CancelClass", "CalendarItems", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken();
+                    @Html.HiddenFor(model => model.Id);
+                    <input type="submit" value="Cancel Class" class="btn-lg btn-danger rounded blankButton" />
+                }
+            }
+            else
+            {
+                int numInClass = Model.UserIds == "" ? 0 : Model.UserIds.Count(x => x == ',') + 1;
+                if (numInClass >= Model.MaxPeople)
+                {
+                    <h2 class="text-danger">Sorry! This class is fully booked.</h2>
+                }
+                else
+                {
+                    <br />
+
+                    using (Html.BeginForm("BookClass", "CalendarItems", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken();
+                        @Html.HiddenFor(model => model.Id);
+                        <input type="submit" value="Book Now" class="btn-lg btn-danger rounded blankButton" />
+                    }
+                    
+                }
+            }
+
+        }
+        else
+        {
+            <br />
+            @Html.ActionLink("Login to book", "../Account/Login", new { returnUrl = "/CalendarItems/ClassDescription/" + Model.Id }, new { @class = "btn-lg btn-danger mb-6 rounded" })
+        }
+
+
+        <br />
+        <br />
+    </div>
+
+</div>
+
+        <div class="hidden-xs text-center">
+            <img class="max-width100" width="1200" src=@ViewBag.pic0 alt=@Model.GymClass.Name />
+        </div>
+        <div class="visible-xs">
+            <img class="max-width100" src=@ViewBag.pic0 alt=@Model.GymClass.Name />
+        </div>
+

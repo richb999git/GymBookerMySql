@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("GymTime", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Timetable", "Index", "CalendarItems", null, new { onClick = "buttonClick()", title = "View class timetable" })</li>
+                    <li class="dropdown hover-drop">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                            More<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <h1 id="spinner1" class="invisible spinner-centre">
+        <i class="fa fa-refresh fa-spin"></i> @*Need the font awesome css - v small though. See _Layout.cshtml*@
+    </h1>
+
+    <div class="container-fluid pad0">
+        @RenderSection("containerFluid", required: false)  @*added for full width section*@
+    </div>
+
+    <div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr class="dark-bottom"/>
+            <footer>
+                <h4 class="text-black">GymTime</h4>
+                <h2 class="pull-left mt-1"><a href="mailto: richb999@tiscali.co.uk"><i class="glyphicon glyphicon-envelope"></i></a></h2>
+                <p class="text-black pull-right mt-5">&copy; @DateTime.Now.Year - Richard Braunton</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/various.js") @*added*@
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

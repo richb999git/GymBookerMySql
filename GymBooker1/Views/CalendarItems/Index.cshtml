@@ -1,0 +1,102 @@
+﻿@* Show class timetable  *@
+@* Controller: CalendarItemsController  *@
+
+@model IEnumerable<GymBooker1.Models.CalendarItem>
+
+<h2>BOOK A FITNESS CLASS</h2>
+<br />
+<div id="snackbar">Some text some message..</div>
+
+@{ var a = Model.ToArray(); }
+
+@Html.Partial("_PartialClassDropDown", new ViewDataDictionary { { "Controller", "Index" }, { "GymClasses", ViewBag.GymClasses }, { "fitnessClass", ViewBag.fitnessClass } })
+
+@Html.Partial("_PartialPaging", new ViewDataDictionary { { "Controller", "Index" }, { "ClassDate", ViewBag.ClassDate }, { "a", a } })
+
+<br /><br /><br /> @*These needed to make sure you can click paging buttons because of anchor-shift-down class below*@
+
+@*Bootstrap 3
+    Using a list-inline with 4 columns of 2 to be able to show 8 columns across the screen *@
+
+<ul class="list-inline row">
+    @{ var j = 0; // 0 when sending with a from date. Else would need to get to the from date
+        DateTime DateInWeek = ViewBag.ClassDate;
+    }
+    @for (int day = 0; day < 7; day = day + 2)
+    {
+
+        <li class="col-md-3 col-xs-12 text-center pd-0">
+
+            @for (int k = 0; k < 2; k++)
+            {
+                <div class="col-md-6 col-xs-12 pd-1">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title title-smaller">@DateInWeek.Date.ToString("ddd d MMM")</h2>
+                        </div>
+
+                        @{if (j >= a.Length || a[j].GymClassTime.Date != DateInWeek.Date) // check if end of data for the week or day
+                            {
+
+                                <hr class="hrCalendar" />
+                                <div class="sel">
+                                    <div class="panel-body fixed-panel">
+                                        <h6>No classes</h6>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                while (j < a.Length && a[j].GymClassTime.Date == DateInWeek.Date) // if the same date then keep looping
+                                {
+
+                                    <hr class="hrCalendar" />
+                                    <div class="sel anchor-shift-down" id="@a[j].Id">
+                                        <div class="panel-body fixed-panel sel2">
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-xs-6 pd-1">
+
+                                                    <p class="text-uppercase text-black mb-0"><b>@a[j].GymClass.Name</b></p>
+                                                    <p class="text-success mb-1 mt-1 h5">@a[j].GymClassTime.ToString("hh:mm tt").ToLower() (@a[j].Duration mins)</p>
+                                                    <p class="text-success mt-1 h5">@a[j].GymClassTime.ToString("ddd d MMM")</p>
+                                                    <p class="text-black mb-0 h5">@a[j].Instructor</p>
+                                                    <p class="text-black mt-1 h5">@a[j].Hall</p>
+
+                                                    <div class="hidden-sm hidden-xs">
+                                                        @{int numInClass = a[j].UserIds == "" ? 0 : a[j].UserIds.Count(x => x == ',') + 1;}
+                                                        @Html.Partial("_PartialGymClassOptions", new ViewDataDictionary { { "numInClass", numInClass }, { "screen", "full" }, { "a", a[j] }, { "strCurrentUserId", ViewBag.UserId } })
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-3 pd-1 visible-sm visible-xs">
+                                                    @Html.Partial("_PartialGymClassOptions", new ViewDataDictionary { { "numInClass", numInClass }, { "screen", "mob" }, { "a", a[j] }, { "strCurrentUserId", ViewBag.UserId } })
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    j = j + 1;
+                                }
+                            }
+
+
+                        }
+
+                    </div>
+                </div>
+
+                DateInWeek = DateInWeek.AddDays(1);
+            }
+
+        </li>
+    }
+
+</ul>
+
+@Html.Partial("_PartialPaging", new ViewDataDictionary { { "Controller", "Index" }, { "ClassDate", ViewBag.ClassDate }, { "a", a } })
+
+<div class="clearfix"></div>

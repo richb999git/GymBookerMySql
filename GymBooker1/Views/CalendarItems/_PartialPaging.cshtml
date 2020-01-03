@@ -1,0 +1,32 @@
+﻿
+@{
+    DateTime prev = DateTime.Now;
+    DateTime next = DateTime.Now;
+    if (ViewBag.a.Length > 0)
+    {
+        prev = ViewBag.ClassDate.AddDays(-7) <= DateTime.Now.Date ? DateTime.Now : ViewBag.ClassDate.AddDays(-7);
+        next = ViewBag.ClassDate.AddDays(7);
+    }
+}
+
+
+<div>
+    @if (ViewBag.a.Length == 0)
+    {
+        <p>No classes</p>
+    }
+    else
+    {
+        if (ViewBag.a[0].GymClassTime.Date > DateTime.Now.AddDays(6).Date)
+        {
+            @Html.ActionLink("PREVIOUS WEEK", (string)ViewBag.controller, new { classDate = prev.ToString("d-MMM-yyyy"), fitnessClass = Request.QueryString["fitnessClass"] }, new { id = "prevButton", @class = "btn btn-info pull-left", onClick = "buttonClick()" })
+        }
+
+        // if next < last date in timetable
+        if (next < ViewBag.a[ViewBag.a.Length - 1].GymClassTime)
+        {
+            @Html.ActionLink("NEXT WEEK", (string)ViewBag.controller, new { classDate = next.ToString("d-MMM-yyyy"), fitnessClass = Request.QueryString["fitnessClass"] }, new { id = "nextButton", @class = "btn btn-info pull-right", onClick = "buttonClick()" })
+        }
+    }
+
+</div>

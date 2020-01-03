@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="dropdown hover-drop">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                    Admin<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Edit Standard Timetable", "Index", "StdGymClassTimetables", null, new { onClick = "buttonClick()" })</li>
+                    <li>@Html.ActionLink("Edit Live Timetable", "CalendarViewAdmin", "CalendarItems", null, new { onClick = "buttonClick()" })</li>
+                </ul>
+            </li>
+        }
+
+        <li class="dropdown hover-drop">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" title="Manage your membership">
+                    Hello @User.Identity.GetUserName()!<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Your class bookings", "MembersPage", "CalendarItems", null, new { onClick = "buttonClick()" })</li>
+                    <li>@Html.ActionLink("Manage your login", "Index", "Manage")</li>
+                </ul>
+            </li>
+
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+} 

@@ -1,0 +1,112 @@
+﻿@* Index page for standard Gy class timetable  *@
+@* Controller: StdGymClassTimetablesController  *@
+
+@model IEnumerable<GymBooker1.Models.StdGymClassTimetable>
+
+<div id="snackbar">Some text some message..</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Class?</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this class?
+            </div>
+            <div class="modal-footer">
+                <button id="yes" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+                <button id="no" type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+<h2>Standard Gym Class Timetable</h2>
+
+<p>Please note that changing the standard timetable only affects new days not added to the live timetable yet. If need edit live timetable.</p>
+<brs />
+<p>@Html.ActionLink("Create New Class", "Create", null, new { @class = "btn btn-primary" })</p>
+
+<div class="tableOverflow containerT">
+    <table class="table table-bordered table-condensed table-striped table-hover">
+        <thead>
+            <tr class="">
+                <th class="width140 sticky">
+                    @Html.DisplayNameFor(model => model.GymClass.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GymClassId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Instructor)
+                </th>
+                <th class="min-width75">
+                    @Html.DisplayNameFor(model => model.Hall)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxPeople)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Deleted)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Day)
+                </th>
+                <th class="min-width75">
+                    Time
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody class="">
+            @foreach (var item in Model)
+            {
+                <tr class="bg-white" id="@item.Id">
+                    <td class="sticky">
+                        @Html.ActionLink(item.GymClass.Name, "Edit", new { id = item.Id })
+                    </td>                   
+                    <td>
+                        @item.Duration mins
+                    </td>
+                    <td>
+                        @item.GymClass.Id
+                    </td>
+                    <td>
+                        @item.Instructor
+                    </td>
+                    <td>
+                        @item.Hall
+                    </td>
+                    <td class="text-center">
+                        @item.MaxPeople
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Deleted)
+                    </td>
+                    <td>
+                        @item.Day
+                    </td>
+                    <td>
+                        @{
+                            DateTime time = new DateTime(1, 1, 1, item.Hour, item.Minute, 0);
+                        }
+                        @time.ToString("h:mm tt")
+                    </td>
+                    <td class="width100px">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { id = item.Id, @class = "btn btn-sm btn-primary" })
+                        <button class="btn btn-sm btn-danger" type="button" onclick="StdTimetableDeleteClassAJAX(@item.Id.ToString());">Del</button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

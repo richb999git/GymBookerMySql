@@ -1,0 +1,211 @@
+﻿@* Home page (for gym classes)  *@
+@* Controller: HomeController  *@
+
+
+@section containerFluid
+{
+
+    <div class="no-margin-home">
+        <video class="fullwidth hidden-xs" autoplay loop muted>
+            <source src="https://res.cloudinary.com/cloudstoragerb/video/upload/v1577141242/GymBooker/b.mp4" type="video/mp4" />
+        </video>
+        <video class="fullwidth visible-xs" loop muted>
+            <source src="https://res.cloudinary.com/cloudstoragerb/video/upload/v1577141242/GymBooker/b.mp4" type="video/mp4" />
+        </video>
+        <br /><br />
+        <h1 class="text-center">CLASS CATEGORIES</h1>
+        <br />
+        <div class="container">
+            We have a wide range of classes to achieve your goals, whether you want to tone, lose weight, or improve
+            endurance or strength, all in a friendly environment and with instructors to give your motivation a
+            helping hand. All classes are included in your membership. You can see our full list of classes here.
+            To make finding the right classes we have grouped our classes into the categories below:
+        </div>
+        <br /><br />
+
+        @*//////////////////// LARGER SCREENS //////////////////////////////////////////////////////////////////////////////*@
+
+        @* CARDIO - for side by side boxes, i.e. bigger than small screen*@
+        <div class="flex-container hidden-xs hidden-sm">
+
+            <div class="box">
+
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577141003/GymBooker/Spin2.jpg" class="width100" alt="Cardio pic" />
+                </div>
+
+            </div>
+
+            <div class="box box-centre">
+                <div class="width50Centre">
+                    <h1>CARDIO</h1>
+                    <p class="">
+                        @ViewBag.cardioDesc
+                    </p>
+                    @*@Html.ActionLink("See All", "Index", "GymCategories", new { category = "Cardio" }, new { @class = "btn btn-primary mb-6 rounded", onClick = "buttonClick()" })*@
+                    @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Cardio" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+                </div>
+            </div>
+
+        </div>
+
+
+        @* SCULPT & TONE - for side by side boxes, i.e. bigger than small screen*@
+        <div class="flex-container hidden-xs hidden-sm">
+
+            <div class="box box-centre">
+                <div class="width50Centre">
+                    <h1>SCULPT & TONE</h1>
+                    <p class="">
+                        @ViewBag.toneDesc
+                    </p>
+                    @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Tone" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577140993/GymBooker/Dumbells1.jpg" class="width100" alt="Sculpt and tone pic" />
+                </div>
+            </div>
+
+        </div>
+
+
+        @* MIND & BODY - for side by side boxes, i.e. bigger than small screen*@
+        <div class="flex-container hidden-xs hidden-sm">
+
+            <div class="box">
+
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577140993/GymBooker/Pilates2.jpg" class="width100" alt="Mind & Body pic" />
+                </div>
+
+            </div>
+
+            <div class="box box-centre">
+                <div class="width50Centre">
+                    <h1>MIND & BODY</h1>
+                    <p class="">
+                        @ViewBag.mindBodyDesc
+                    </p>
+                    @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Mind" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+                </div>
+            </div>
+
+        </div>
+
+
+        @* STRENGTH - for side by side boxes, i.e. bigger than small screen*@
+        <div class="flex-container hidden-xs hidden-sm bg-warning">
+
+            <div class="box box-centre">
+                <div class="width50Centre">
+                    <h1>STRENGTH</h1>
+                    <p class="">
+                        @ViewBag.strengthDesc
+                    </p>
+                    @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Strength" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+                </div>
+            </div>
+
+            <div class="box">
+
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577141004/GymBooker/Strength4.jpg" class="width100" alt="Strength pic" />
+                </div>
+
+            </div>
+
+        </div>
+
+
+        @*//////////////////// SMALLER SCREENS //////////////////////////////////////////////////////////////////////////////*@
+
+        @* CARDIO - for top down boxes, pic first, i.e for small or xs screen*@
+        <div class=" visible-xs visible-sm dodgerBlueBackground">
+
+            <div class="">
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577141003/GymBooker/Spin2.jpg" class="width100" alt="Cardio pic" />
+                </div>
+            </div>
+
+
+            <div class="width75Centre text-center smallScreenHeight230">
+                <h1>CARDIO</h1>
+                <p class="">
+                    @ViewBag.cardioDesc
+                </p>
+                @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Cardio" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+            </div>
+
+
+        </div>
+
+
+        @* SCULPT & TONE - for top down boxes, pic first, i.e for small or xs screen*@
+        <div class="visible-xs visible-sm dodgerBlueBackground">
+
+            <div class="">
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577140993/GymBooker/Dumbells1.jpg" class="width100" alt="Sculpt and tone pic" />
+                </div>
+            </div>
+
+
+            <div class="width75Centre text-center smallScreenHeight230">
+                <h1>SCULPT & TONE</h1>
+                <p class="">
+                    @ViewBag.toneDesc
+                </p>
+                @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Tone" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+            </div>
+
+        </div>
+
+        @* MIND & BODY - for top down boxes, pic first, i.e for small or xs screen*@
+        <div class=" visible-xs visible-sm dodgerBlueBackground">
+
+            <div class="">
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577140993/GymBooker/Pilates2.jpg" class="width100" alt="Mind & Body pic" />
+                </div>
+            </div>
+
+            <div class="width75Centre text-center smallScreenHeight230">
+                <h1>MIND & BODY</h1>
+                <p class="">
+                    @ViewBag.mindBodyDesc
+                </p>
+                @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Mind" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+            </div>
+
+        </div>
+
+        @* STRENGTH - for top down boxes, pic first, i.e for small or xs screen*@
+        <div class=" visible-xs visible-sm dodgerBlueBackground">
+
+            <div class="">
+                <div class="">
+                    <img src="https://res.cloudinary.com/cloudstoragerb/image/upload/v1577141004/GymBooker/Strength4.jpg" class="width100" alt="Strength pic" />
+                </div>
+            </div>
+
+            <div class="width75Centre text-center mb-50 smallScreenHeight230">
+                <h1>STRENGTH</h1>
+                <p class="">
+                    @ViewBag.strengthDesc
+                </p>
+                @Html.ActionLink("See All", "Categories", "GymClasses", new { id = "Strength" }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+            </div>
+
+        </div>
+
+
+    </div>
+
+}
+
+
+

@@ -1,0 +1,31 @@
+﻿
+@if (User.Identity.IsAuthenticated)
+{
+    // show Booked! if booked and a Cancel button
+    //var strCurrentUserId = ViewBag.UserId;
+    int index = ViewBag.a.UserIds.IndexOf(ViewBag.strCurrentUserId);
+    if (index != -1)
+    {
+        <p id="@ViewBag.a.Id@ViewBag.screen-C" class="mb-1 mt-1">You're in!</p>
+        <button id="@ViewBag.a.Id@ViewBag.screen-CBut" class="btn btn-danger mb-6 rounded text-center ml-5 mr-5" type="button" onclick="CancelClassAJAX(@ViewBag.a.Id.ToString());">Cancel</button>        
+    }
+    else
+    {
+        if (ViewBag.numInClass >= ViewBag.a.MaxPeople)
+        {
+            <p id="@ViewBag.a.Id@ViewBag.screen-C" class="mb-1 mt-1">Fully Booked</p>
+        }
+        else
+        {
+            <p id="@ViewBag.a.Id@ViewBag.screen-C" class="mb-1 mt-1">&nbsp</p>
+            <button id="@ViewBag.a.Id@ViewBag.screen-CBut" class="btn btn-danger mb-6 rounded text-center ml-5 mr-5" type="button" onclick="BookClassAJAX(@ViewBag.a.Id.ToString());">Book Class</button>
+        }
+    }
+
+}
+else
+{
+    @Html.ActionLink("Login to book", "../Account/Login", new { returnUrl = "/CalendarItems" }, new { @class = "btn btn-danger mb-6 text-center rounded ml-5 mr-5" })
+}
+@Html.ActionLink("Details", "ClassDescription", new { id = ViewBag.a.Id }, new { @class = "btn btn-primary mb-6 rounded text-center ml-5 mr-5", onClick = "buttonClick()" })
+

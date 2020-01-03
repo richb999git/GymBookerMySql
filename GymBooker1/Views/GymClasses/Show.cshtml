@@ -1,0 +1,33 @@
+﻿@* Show details of a class  *@
+@* Controller: GymClassesController  *@
+
+@model GymBooker1.Models.GymClass
+
+@{ 
+    string pic0 = ViewBag.pics[0];
+    string pic1 = ViewBag.pics[1];
+}
+
+
+@section containerFluid
+{
+
+    <div class=" hidden-xs hidden-sm no-margin-home">
+        <img src=@pic0 class="pull-left width50" alt=@Model.Name />
+        <img src=@pic1 class="pull-left width50" alt=@Model.Name />
+    </div>
+
+    <div class="visible-xs visible-sm no-margin-home">
+        <img src=@pic1 alt=@Model.Name class="width100" />
+    </div>
+
+}
+
+<br /><br />
+<h2 class="text-center">@Model.Name</h2>
+<br />
+<h3 class="text-center">@Model.Description</h3>
+<br />
+<p class="text-center">@Html.ActionLink("BOOK A CLASS", "Index", "CalendarItems", new { fitnessClass = Model.Name }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })</p>
+
+<br />

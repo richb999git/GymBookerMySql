@@ -1,0 +1,90 @@
+﻿@* Admin page to view a class (to see who has booked) *@
+@* Controller: CalendarItemsController  *@
+
+@model GymBooker1.Models.CalendarItem
+
+
+<h2>Details of class from live calendar</h2>
+
+<div>
+    <br />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GymClass.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GymClass.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GymClassTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GymClassTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration) mins
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hall)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hall)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Instructor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Instructor)
+        </dd>
+
+    </dl>
+
+    <br />
+    <p><b>Members who have booked this class:</b></p>
+
+    <div class="memberList containerT">
+        <table class="table table-bordered table-hover table-condensed bg-white">
+            <thead>
+                <tr class="">
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.gymClassAttenders)
+                {
+                    <tr>
+                        <td>
+                            @ViewBag.AllUsers.Find(item).Email
+                        </td>
+                        <td>
+                            @ViewBag.AllUsers.Find(item).FirstName @ViewBag.AllUsers.Find(item).LastName
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+    <br />
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "CalendarViewAdmin")
+</p>

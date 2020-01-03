@@ -1,0 +1,55 @@
+﻿@* Show all classes in each category  *@
+@* Controller: GymClassesController  *@
+
+@model IEnumerable<GymBooker1.Models.GymClass>
+
+
+
+<h1 class="font-impact text-center text-uppercase">@ViewBag.category</h1>
+
+
+@*  loop through model
+    show title of category item
+    need name of each pic. Either from database or from folder (folder for now) - get name from database or array?
+*@
+
+
+
+<div class="text-center no-margin-home" >
+
+    @{ var i = 0;}
+    @foreach(var item in Model)
+    {
+        string pic = ViewBag.pics[i];
+        i++;
+      
+        <div class="inline-block">
+            <h3 class="text-center">@item.Name</h3>
+            <div class="img-hover-zoom marginRL10 hidden-xs ">
+                <a href="@Url.Action("Show", "GymClasses", new { id = item.Name })">
+                    <img src=@pic width="500" alt="" /> @*width 500 makes the pic taller and cuts off some*@
+                </a>
+            </div>
+
+            <div class="visible-xs no-margin-home">
+                
+                <a href="@Url.Action("Show", "GymClasses", new { id = item.Name })">
+                    <img width="100%" src=@pic alt="" class=""/> @* width 300 makes it fit on the small page and makes in full height*@
+                </a>
+            </div>
+
+            <br />
+            <div class="text-center">
+                @Html.ActionLink("View", "Show", "GymClasses", new { id = item.Name }, new { @class = "btn-lg btn-primary mb-6 rounded", onClick = "buttonClick()" })
+            </div>
+            <br />
+        </div>
+    }
+
+</div>    
+    
+<div class="clearfix"></div> @*so content below goes below!*@
+
+
+
+
