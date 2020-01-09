@@ -28,8 +28,15 @@ namespace GymBooker1.Models
     [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        // Added so that Azure environment variable can be used to connect to database. Rather than use the connection string in Azure.
+        // This is better because port number can change. (As long as format of "MYSQLCONNSTR_localdb" doesn't change).
+        static string mysql = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
+        static System.Text.StringBuilder c = new System.Text.StringBuilder(mysql).Replace("Data Source=127.0.0.1:", "server=localhost;Port=").Replace("User Id", "uid").Append(";");
+        static string connectionString = mysql != null ? c.ToString() : "DefaultConnection";
+
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base(connectionString)
+            //: base("DefaultConnection", throwIfV1Schema: false) // original
         {
         }
 

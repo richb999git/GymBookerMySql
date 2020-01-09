@@ -21,9 +21,9 @@
         }
 
         <li class="dropdown hover-drop">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" title="Manage your membership">
-                    Hello @User.Identity.GetUserName()!<span class="caret"></span>
-                </a>
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" title="Manage your membership">
+                Hello @User.Identity.GetUserName()!<span class="caret"></span>
+            </a>
                 <ul class="dropdown-menu">
                     <li>@Html.ActionLink("Your class bookings", "MembersPage", "CalendarItems", null, new { onClick = "buttonClick()" })</li>
                     <li>@Html.ActionLink("Manage your login", "Index", "Manage")</li>
